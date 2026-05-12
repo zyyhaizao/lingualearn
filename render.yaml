@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: lingualearn-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run server
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: DB_HOST
+        value: （在 Render 后台添加）
+      - key: DB_PORT
+        value: （在 Render 后台添加）
+      - key: DB_NAME
+        value: （在 Render 后台添加）
+      - key: DB_USER
+        value: （在 Render 后台添加）
+      - key: DB_PASSWORD
+        value: （在 Render 后台添加）
+      - key: JWT_SECRET
+        generateValue: true
+    autoDeploy: true
