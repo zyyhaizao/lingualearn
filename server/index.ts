@@ -44,12 +44,12 @@ app.get('/api/health', (req, res) => {
 const distPath = path.join(__dirname, '../dist');
 try {
   app.use(express.static(distPath));
-  app.get('*', (req, res) => {
+  app.get('/{.*}', (req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
   });
 } catch (err) {
   console.log('Frontend dist folder not found, serving API only');
-  app.get('*', (req, res) => {
+  app.get('/{.*}', (req, res) => {
     res.send('LinguaLearn API is running! Frontend not available.');
   });
 }
