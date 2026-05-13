@@ -24,9 +24,6 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// 服务前端静态文件
-app.use(express.static(path.join(__dirname, '../dist')));
-
 app.use('/api/auth', authRoutes);
 app.use('/api/languages', languageRoutes);
 app.use('/api/courses', courseRoutes);
@@ -44,9 +41,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Vue Router 历史模式回退
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
+app.get('/', (req, res) => {
+  res.send('LinguaLearn API is running!');
 });
 
 app.listen(PORT, () => {
