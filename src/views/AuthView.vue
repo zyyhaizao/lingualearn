@@ -3,7 +3,7 @@
     <div class="auth-card">
       <div class="auth-header">
         <h1>LinguaLearn</h1>
-        <p>开启你的多语种学习之旅</p>
+        <p>朱津莹宝宝 开启你的多语种学习之旅</p>
       </div>
 
       <div class="auth-tabs">
