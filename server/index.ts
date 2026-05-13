@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth';
 import languageRoutes from './routes/languages';
 import courseRoutes from './routes/courses';
@@ -13,11 +15,17 @@ import communityRoutes from './routes/community';
 import learningPathRoutes from './routes/learningPath';
 import userRoutes from './routes/users';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+
+// 服务前端静态文件
+app.use(express.static(path.join(__dirname, '../dist')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/languages', languageRoutes);
@@ -34,6 +42,11 @@ app.use('/api/users', userRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// Vue Router 历史模式回退
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 app.listen(PORT, () => {
