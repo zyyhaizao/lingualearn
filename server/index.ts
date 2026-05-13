@@ -45,6 +45,15 @@ app.get('/', (req, res) => {
   res.send('LinguaLearn API is running!');
 });
 
-app.listen(PORT, () => {
-  console.log(`LinguaLearn API Server running on port ${PORT}`);
+const server = app.listen(PORT, () => {
+  console.log(`\n=================================`);
+  console.log(`LinguaLearn API Server started`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`Port: ${PORT}`);
+  console.log(`=================================\n`);
+});
+
+server.on('error', (err) => {
+  console.error('Server error:', err);
+  process.exit(1);
 });
