@@ -41,11 +41,18 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-app.use(express.static(path.join(__dirname, '../dist')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
+const distPath = path.join(__dirname, '../dist');
+try {
+  app.use(express.static(distPath));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+} catch (err) {
+  console.log('Frontend dist folder not found, serving API only');
+  app.get('*', (req, res) => {
+    res.send('LinguaLearn API is running! Frontend not available.');
+  });
+}
 
 const server = app.listen(PORT, () => {
   console.log(`\n=================================`);
